@@ -1,0 +1,71 @@
+// DELETE QUERIES
+// 1. Delete by _id
+await Model.findByIdAndDelete(id);
+
+// 2. Find one document matching the filter and delete it
+await Model.findOneAndDelete({ key: value });
+
+// 3. Delete the first document matching the filter
+await Model.deleteOne({ key: value });
+
+// 4. Delete all documents matching the filter
+await Model.deleteMany({ key: value });
+
+// FIND QUERIES
+// 1. Find a document by _id
+const doc = await Model.findById(id);
+
+// 2. Find the first document matching the filter
+const doc = await Model.findOne({ key: value });
+
+// 3. Find all documents matching the filter
+const docs = await Model.find({ key: value });
+
+// 4. Find a document matching the filter, update it, and return the updated document
+const updatedDoc = await Model.findOneAndUpdate(
+  { key: value },
+  { $set: { key: newValue } },
+  { new: true } // Returns the updated document
+);
+
+// UPDATE QUERIES
+// 1. Find a document by _id, update it, and return the updated document
+const updatedDoc = await Model.findByIdAndUpdate(
+  id,
+  { $set: { key: newValue } },
+  { new: true } // Returns the updated document
+);
+
+// 2. Update the first document matching the filter
+await Model.updateOne(
+  { key: value },
+  { $set: { key: newValue } }
+);
+
+// 3. Update all documents matching the filter
+await Model.updateMany(
+  { key: value },
+  { $set: { key: newValue } }
+);
+
+// 4. Replace the first document matching the filter entirely
+await Model.replaceOne(
+  { key: value },
+  { newDocument }
+);
+
+// MISCELLANEOUS QUERIES
+// 1. Count documents matching the filter
+const count = await Model.countDocuments({ key: value });
+
+// 2. Get an array of distinct values for a field
+const values = await Model.distinct("field", { key: value });
+
+// 3. Check if documents matching the filter exist
+const exists = await Model.exists({ key: value });
+
+// 4. Perform aggregation queries
+const results = await Model.aggregate([
+  { $match: { key: value } },
+  { $group: { _id: "$key", count: { $sum: 1 } } }
+]);
