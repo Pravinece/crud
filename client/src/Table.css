@@ -1,0 +1,14 @@
+/* Custom CSS */
+.custom-modal {
+    max-width: 90%; /* Change modal width */
+    background-color: #f8f9fa; /* Custom background */
+    border-radius: 10px; /* Rounded corners */
+  }
+  .custom-modal .modal-header {
+    background-color: #007bff;
+    color: white;
+  }
+  .custom-modal .modal-footer {
+    justify-content: center; /* Center the footer buttons */
+  }
+  

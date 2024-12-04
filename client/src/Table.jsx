@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Modal, Button } from "react-bootstrap";
+import '../src/Table.css'
+
 
 export default function Table() {
   const [data, setData] = useState([]);
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
     axios
@@ -16,6 +23,9 @@ export default function Table() {
       });
   }, []);
   const HandleAdd = () => {
+
+    
+
     
   };
 
@@ -42,7 +52,10 @@ export default function Table() {
     })
   };
 
-  
+  const HandleShowModal = (item) => {
+    setSelectedItem(item);
+    setShowModal(true);
+  };
 
   return (
     <>
@@ -69,11 +82,52 @@ export default function Table() {
               <td>{emp.Location}</td>
               <td>
                 <button onClick={() => HandleEdits(emp._id)}>Edit</button>
+                <button onClick={() => HandleShowModal(emp)}>Details</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+
+            {/* Modal for displaying selected employee details */}
+            <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="custom-modal">
+        <Modal.Header closeButton>
+          <Modal.Title>Employee Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedItem ? (
+            <>
+              <p>
+                <strong>Name:</strong> {selectedItem.Name}
+              </p>
+              <p>
+                <strong>DOB:</strong>{" "}
+                {new Date(selectedItem.DOB).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Department:</strong> {selectedItem.Department}
+              </p>
+              <p>
+                <strong>Location:</strong> {selectedItem.Location}
+              </p>
+            </>
+          ) : (
+            <p>No item selected</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
+
     </>
   );
 }
